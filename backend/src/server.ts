@@ -7,12 +7,17 @@ import cookieParser from "cookie-parser";
 import taskRouter from "./routes/task.js";
 
 dotenv.config();
+const frontend_url = process.env.FRONTEND_URL as string;
+
+if(!frontend_url){
+  throw Error("Frontend url is not loaded from env")
+}
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: frontend_url,
     credentials: true,
   })
 );
