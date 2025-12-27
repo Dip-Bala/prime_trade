@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
 
   const {
-    data: tasks,
+    data: tasks = [],
     isLoading,
     isError,
   } = useQuery<Task[]>({
@@ -25,11 +25,16 @@ export default function DashboardPage() {
     },
   });
 
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(t => t.status === "DONE").length;
+  const pendingTasks = tasks.filter(t => t.status === "PENDING").length;
+
   return (
     <div className="space-y-6">
 
+      {/* HEADER */}
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Tasks</h1>
+        <h1 className="text-xl font-semibold">Dashboard</h1>
 
         <button
           onClick={() => setOpenAddTaskModal(true)}
@@ -40,15 +45,23 @@ export default function DashboardPage() {
         </button>
       </div>
 
+      {/* SUMMARY CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <SummaryCard title="Total Tasks" value={totalTasks} />
+        <SummaryCard title="Completed" value={completedTasks} />
+        <SummaryCard title="Pending" value={pendingTasks} />
+      </div>
+
+      {/* TASK LIST */}
       {isLoading && <p>Loading tasks...</p>}
       {isError && <p>Failed to load tasks.</p>}
 
-      {!isLoading && tasks?.length === 0 && (
-        <p className="text-muted">No tasks found.</p>
+      {!isLoading && tasks.length === 0 && (
+        <p className="text-muted-foreground">No tasks found.</p>
       )}
 
       <div className="grid gap-3">
-        {tasks?.map((task) => (
+        {tasks.map((task) => (
           <div
             key={task._id}
             className="border rounded-md p-4 bg-background shadow-sm"
@@ -59,16 +72,40 @@ export default function DashboardPage() {
                 {task.description}
               </p>
             )}
-            <span className="text-xs mt-1 inline-block text-primary">
+            <span
+              className={`text-xs mt-1 inline-block font-medium ${
+                task.status === "DONE"
+                  ? "text-green-600"
+                  : "text-yellow-600"
+              }`}
+            >
               {task.status}
             </span>
           </div>
         ))}
       </div>
 
+      {/* ADD TASK MODAL */}
       {openAddTaskModal && (
         <AddTaskModal onClose={() => setOpenAddTaskModal(false)} />
       )}
+    </div>
+  );
+}
+
+/* ----------------- SUMMARY CARD ----------------- */
+
+function SummaryCard({
+  title,
+  value,
+}: {
+  title: string;
+  value: number;
+}) {
+  return (
+    <div className="rounded-lg border bg-background p-4 shadow-sm">
+      <p className="text-sm text-muted-foreground">{title}</p>
+      <p className="text-2xl font-semibold">{value}</p>
     </div>
   );
 }

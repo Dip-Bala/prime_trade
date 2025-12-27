@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {RegisterController, LoginController, MeController} from '../controllers/authController.js';
+import {RegisterController, LoginController, MeController, LogoutController} from '../controllers/authController.js';
 import {verifyToken} from '../middleware/auth.js';
 
 const authRouter = Router();
@@ -7,8 +7,9 @@ const authRouter = Router();
 authRouter.post('/register', RegisterController);
 authRouter.post('/login', LoginController);
 authRouter.use(verifyToken);
-// authRouter.post('/logout', LogoutController);
+authRouter.post('/logout', LogoutController);
 authRouter.get('/me', MeController)
+
 
 
 

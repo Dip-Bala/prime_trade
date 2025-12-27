@@ -86,7 +86,7 @@ export const LoginController = async(req: Request, res: Response) => {
     res.cookie('access_token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',   
-        sameSite: "none", 
+        sameSite: "lax", 
         maxAge: 60 * 60 * 1000
     })
     return res.status(201).json({
@@ -117,3 +117,8 @@ export const MeController = async(req: Request, res: Response) => {
         }
     })
 }
+
+export const LogoutController = async(req: Request, res: Response) => {
+  res.clearCookie("access_token");
+  res.status(200).json({ message: "Logged out" });
+};

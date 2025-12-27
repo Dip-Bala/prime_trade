@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="h-14 flex items-center px-6 py-8 ">
+    <div className="h-14 flex items-center px-8 py-10">
       <div className="flex items-center">
             <Image
                 src='/logo.svg'
