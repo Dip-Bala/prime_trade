@@ -30,7 +30,8 @@ export default function Page() {
         onSuccess: (res) => {
             console.log("User Logged in successfully");
             queryClient.setQueryData(["me"], res.data.user);
-            router.push('/dashboard');
+            router.replace('/dashboard');
+
         },
         onError: (error) => {
             console.error(error);
