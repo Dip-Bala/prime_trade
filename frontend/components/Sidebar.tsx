@@ -27,7 +27,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="hidden md:flex w-64 p-6 shadow-xs shadow-primary bg-background">
+      <aside className="hidden md:flex w-64 p-6 border-r border-primary/90 shadow-primary bg-background">
         <nav className="flex flex-col gap-2 w-full">
           {navItems.map((item) => {
             const isActive =

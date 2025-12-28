@@ -59,32 +59,31 @@ export default function Page() {
         <label>Name</label>
         <input
           {...register("name")}
-          className="border rounded-md px-3 py-2 border-zinc-400"
+          className="border rounded-md px-3 py-2 border-zinc-400 focus:outline-primary "
         />
         {errors.name && (
           <p className="text-sm text-red-500">{errors.name.message}</p>
         )}
       </div>
 
-      {/* Email */}
       <div className="flex flex-col gap-1">
         <label>Email</label>
         <input
           {...register("email")}
-          className="border rounded-md px-3 py-2 border-zinc-400"
+          className="border rounded-md px-3 py-2 border-zinc-400 focus:outline-primary "
         />
         {errors.email && (
           <p className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
-      {/* Password */}
+
       <div className="flex flex-col gap-1">
         <label>Password</label>
         <input
           type="password"
           {...register("password")}
-          className="border rounded-md px-3 py-2 border-zinc-400"
+          className="border rounded-md px-3 py-2 border-zinc-400 focus:outline-primary "
         />
         {errors.password && (
           <p className="text-sm text-red-500">{errors.password.message}</p>
@@ -94,10 +93,10 @@ export default function Page() {
       <button
         type="submit"
         disabled={!isValid || mutation.isPending}
-        className={`rounded-md px-4 py-2 transition-all
+        className={`rounded-md px-4 py-2 transition-all 
           ${
             isValid
-              ? "bg-foreground text-background"
+              ? "bg-foreground text-background cursor-pointer"
               : "bg-primary text-background cursor-not-allowed"
           }
         `}
